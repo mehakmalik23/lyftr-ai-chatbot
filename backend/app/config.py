@@ -7,7 +7,7 @@ class Settings:
     @property
     def llm_api_keys(self) -> list[str]:
         raw = os.getenv("LLM_API_KEYS", "")
-        return [k.strip() for k in raw.split(",") if k.strip()]
+        return [k.strip().strip("'\"") for k in raw.replace(";", ",").split(",") if k.strip().strip("'\"")]
 
     @property
     def llm_model(self) -> str:

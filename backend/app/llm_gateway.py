@@ -25,8 +25,14 @@ def parse_simulate_failure_header(header_val: str | None) -> dict[str, int]:
 
 def generate_chat_completion(messages: list[dict], simulate_header: str | None = None) -> tuple[str, dict]:
     start_time = time.perf_counter()
-    model = settings.llm_model
     keys = settings.llm_api_keys
+    model = settings.llm_model
+    if keys:
+        first_key = keys[0]
+        if first_key.startswith("gsk_") and not model.startswith("groq/"):
+            model = "groq/llama-3.3-70b-versatile"
+        elif first_key.startswith("AIza") and not model.startswith("gemini/"):
+            model = "gemini/gemini-2.0-flash" 
 
     if not keys:
         raise HTTPException(status_code=503, detail="all providers unavailable")
@@ -96,7 +102,8 @@ def generate_chat_completion(messages: list[dict], simulate_header: str | None =
                 "key_id": key_id,
                 "fallback_attempts": fallback_attempts
             }
-        except Exception:
+        except Exception as e:
+            print(f'[LLM Gateway Error on {key_id} with model {model}]: {e}', flush=True)
             fallback_attempts += 1
             continue
 
