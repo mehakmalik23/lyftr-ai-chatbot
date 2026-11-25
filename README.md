@@ -1,9 +1,9 @@
 # LLM Chatbot with Key Failover and Response Caching
 
 ## 1. Live URLs
-- **Frontend URL:** `https://YOUR-FRONTEND-URL.vercel.app`
-- **Backend URL:** `https://YOUR-BACKEND-URL.hf.space`
-- **Health Check:** `https://YOUR-BACKEND-URL.hf.space/health`
+- **Frontend URL:** `https://lyftr-ai-chatbot-cyan.vercel.app`
+- **Backend URL:** `https://lyftr-ai-chatbot-6o4t.onrender.com`
+- **Health Check:** `https://lyftr-ai-chatbot-6o4t.onrender.com/health`
 
 ## 2. Run locally: with Docker and without
 ### With Docker
