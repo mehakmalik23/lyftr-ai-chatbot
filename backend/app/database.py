@@ -6,7 +6,11 @@ from .config import settings
 
 def get_connection():
     db_path = settings.sqlite_path
-    Path(db_path).parent.mkdir(parents=True, exist_ok=True)
+    try:
+        Path(db_path).parent.mkdir(parents=True, exist_ok=True)
+    except PermissionError:
+        db_path = "/tmp/app.db"
+        Path(db_path).parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(db_path, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     return conn
